@@ -1,0 +1,67 @@
+1. Understand What CMake Is and What It Does
+CMake is a build system generator. It doesn't directly compile code; instead, it generates platform-specific build files 
+(like Makefiles or Visual Studio project files) that can be used to compile and build a project.
+CMake is used to manage the build process across different platforms and compilers.
+
+2. Basic Concepts
+  CMakeLists.txt: This is the configuration file where you specify how the project should be built (which files to compile, what libraries to link, etc.).
+  Target: A target is an output that CMake generates (like an executable or a library).
+  CMake Commands: These are the instructions that tell CMake how to handle different tasks, like 
+  finding dependencies, defining build flags, or specifying files to be compiled.
+
+3. Setting Up a Basic Project
+  Let's start with a basic project structure:
+  MyProject/
+  ├── CMakeLists.txt
+  └── src/
+      └── main.cpp
+  CMakeLists.txt (Basic Setup):
+cmake_minimum_required(VERSION 3.10)  # Minimum version of CMake
+project(MyProject)  # Name of the project
+
+set(CMAKE_CXX_STANDARD 17)  # Set the C++ standard to C++17
+
+# Add an executable target
+add_executable(MyProject src/main.cpp)
+
+main.cpp (Sample Code):
+
+#include <iostream>
+
+int main() {
+    std::cout << "Hello, CMake!" << std::endl;
+    return 0;
+}
+
+To build this project, follow these steps:
+Create a build directory inside your project folder:
+mkdir build
+cd build
+Run CMake to generate the build system:
+cmake ..
+Build the project using the generated build system:
+
+make
+Run the executable:
+./MyProject
+
+4. Understanding Common CMake Commands
+Here are some essential CMake commands:
+cmake_minimum_required(VERSION x.x): Specifies the minimum required version of CMake.
+project(Name): Defines the project name.
+add_executable(target_name source_file): Defines an executable target and specifies the source files.
+add_library(target_name source_files): Defines a library target.
+include_directories(directory): Adds include directories to the build.
+link_directories(directory): Adds library directories to the build.
+target_link_libraries(target_name library): Links a library to the target.
+
+5. Adding External Libraries
+Often, C++ projects require third-party libraries. Here’s an example of how to link an external library:
+
+find_package(SomeLibrary REQUIRED)  # Finds the library
+target_link_libraries(MyProject SomeLibrary::SomeLibrary)  # Links the library to your target
+If the library is installed via a package manager, you can use find_package(). Otherwise, you may need to provide the path to the library or even compile it from source.
+
+6. Using CMake Modules
+CMake has modules for finding and setting up dependencies, like FindBoost.cmake, FindOpenGL.cmake, etc. Understanding how these work is helpful as you start working with larger projects. You can also create your own Find<Library>.cmake modules if necessary.
+
